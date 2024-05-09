@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+
+
+        body {
+            background: black;
+            min-height: 100vh;
+            font-family: Inter, sans-serif;
+
+
+        }
+
+        a.logo {
+            color: white;
+        }
+
+        .header {
+            padding: 1rem 1.5rem;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .header nav a {
+            padding: 1rem 0;
+            text-decoration: none;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            color: #ffffff;
+            display: inline-block;
+            height: 100%;
+            transition: opacity 0.2s ease;
+            position: relative;
+        }
+
+        header nav a:hover {
+            opacity: 100%;
+        }
+
+
+        .btn-shine {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            padding: 12px 48px;
+            color: #ffffff;
+            background: linear-gradient(to right, #4d4d4d 0, white 10%, #4d4d4d 20%);
+            background-position: 0;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s infinite linear;
+            animation-fill-mode: forwards;
+            -webkit-text-size-adjust: none;
+            font-weight: 600;
+            font-size: 3rem;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        @keyframes shine {
+            0% {
+                background-position: 0;
+            }
+            50% {
+                background-position: 380px;
+            }
+            100% {
+                background-position: 760px;
+            }
+        }
+
+    </style>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body style="display: inline">
+
+<header class="header">
+    <a href="/" class="logo">
+        <h1>MOVIETIFY</h1>
+    </a>
+    <nav>
+        <a href="category">Category</a>
+        <a href="movies">Movie</a>
+        <a href="classification">Classification</a>
+    </nav>
+</header>
+<h2 class="btn-shine">THE BEST MOVIE APP, EVER!</h2>
+</body>
+</html>

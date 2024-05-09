@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Classification Movie List</title>
+    <style>
+
+
+        section {
+            background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+
+            padding: 3rem;
+            border-radius: 0.5rem;
+            color: white;
+            width: 70%;
+            height: 80%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .section-title {
+            margin-bottom: 1rem;
+        }
+
+        .table-header {
+            padding-left: 1rem;
+            padding-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: .5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .table-item {
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: .5rem;
+            margin-bottom: 1rem;
+        }
+
+
+        .table-item:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .table-item__actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .table-item__actions a {
+            padding: .25rem;
+            background-color: white;
+            border-radius: .5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all ease-in .3s;
+            cursor: pointer;
+            color: black;
+        }
+
+        .table-item__actions a:hover {
+            background: rgba(255,255,255,0.5);
+        }
+
+
+        .action-btn {
+            display: inline-block;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 1);
+            border-radius: 0.5rem;
+            color: black;
+            transition: all 0.15s ease-in;
+            width: 100%;
+            text-align: center;
+        }
+
+        .action-btn:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .action-btn:focus {
+            transform: scale(90%);
+        }
+
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+
+
+        body {
+            background: black;
+            min-height: 100vh;
+            font-family: Inter, sans-serif;
+
+
+        }
+
+        .logo {
+            color: white;
+        }
+
+        .header {
+            padding: 1rem 1.5rem;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .header nav a {
+            padding: 1rem 0;
+            text-decoration: none;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            color: #ffffff;
+            display: inline-block;
+            height: 100%;
+            transition: opacity 0.2s ease;
+            position: relative;
+        }
+
+        header nav a:hover {
+            opacity: 100%;
+        }
+
+
+        .btn-shine {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            padding: 12px 48px;
+            color: #ffffff;
+            background: linear-gradient(to right, #4d4d4d 0, white 10%, #4d4d4d 20%);
+            background-position: 0;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s infinite linear;
+            animation-fill-mode: forwards;
+            -webkit-text-size-adjust: none;
+            font-weight: 600;
+            font-size: 3rem;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        @keyframes shine {
+            0% {
+                background-position: 0;
+            }
+            50% {
+                background-position: 380px;
+            }
+            100% {
+                background-position: 760px;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="header">
+    <a href="/" class="logo">
+        <h1>MOVIETIFY</h1>
+    </a>
+    <nav>
+        <a href="category">Category</a>
+        <a href="movies">Movie</a>
+        <a href="classification">Classification</a>
+    </nav>
+</header>
+<section>
+
+    <h2 class="section-title">Classification Movie List</h2>
+
+
+    <div class="table-header">
+        <p>Movie</p>
+        <p>Category</p>
+        <p>Date</p>
+        <p>Action</p>
+    </div>
+
+    <div class="table-item" th:each="cr:${serhat}">
+        <p th:text="${cr.movie.title}"></p>
+        <p th:text="${cr.category.name}"></p>
+        <p th:text="${cr.date}"></p>
+        <div class="table-item__actions">
+            <a th:href="@{/classification/update/{id}(id=${cr.classification.id})}">
+                Update
+            </a>
+            <a th:href="@{/classification/delete/{id}(id=${cr.classification.id})}">
+                Delete
+            </a>
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>
