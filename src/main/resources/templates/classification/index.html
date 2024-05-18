@@ -200,7 +200,7 @@
         <p>Movie</p>
         <p>Category</p>
         <p>Date</p>
-        <p>Action</p>
+        <p th:if="${#authorization.expression('hasRole(''ADMIN'')')}" >Action</p>
     </div>
 
     <div class="table-item" th:each="cr:${serhat}">
@@ -208,10 +208,10 @@
         <p th:text="${cr.category.name}"></p>
         <p th:text="${cr.date}"></p>
         <div class="table-item__actions">
-            <a th:href="@{/classification/update/{id}(id=${cr.classification.id})}">
+            <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/classification/update/{id}(id=${cr.classification.id})}">
                 Update
             </a>
-            <a th:href="@{/classification/delete/{id}(id=${cr.classification.id})}">
+            <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/classification/delete/{id}(id=${cr.classification.id})}">
                 Delete
             </a>
         </div>

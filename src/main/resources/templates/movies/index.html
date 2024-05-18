@@ -197,7 +197,7 @@
         <p>Title</p>
         <p>Director</p>
         <p>Year</p>
-        <p>Action</p>
+        <p th:if="${#authorization.expression('hasRole(''ADMIN'')')}" >Action</p>
     </div>
     <div class="table-item" th:each="movie : ${movies}">
         <p th:text="${movie.id}"></p>
@@ -205,18 +205,18 @@
         <p th:text="${movie.director}"></p>
         <p th:text="${movie.year}"></p>
         <div class="table-item__actions">
-            <a th:href="@{/movies/update/{id}(id=${movie.id})}">
+            <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/movies/update/{id}(id=${movie.id})}">
                 Update
             </a>
-            <a th:href="@{/movies/delete/{id}(id=${movie.id})}">
+            <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/movies/delete/{id}(id=${movie.id})}">
                 Delete
             </a>
-            <a th:href="@{/classification/classificatemovie/{id}(id=${movie.id})}">
+            <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/classification/classificatemovie/{id}(id=${movie.id})}">
                 Classification
             </a>
         </div>
     </div>
-    <a href="/movies/add" class="action-btn">Add New Movie</a>
+    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" href="/movies/add" class="action-btn">Add New Movie</a>
 
 </section>
 

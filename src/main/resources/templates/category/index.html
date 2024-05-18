@@ -201,25 +201,25 @@
         <div class="table-header">
             <p>ID</p>
             <p>Name</p>
-            <p>Action</p>
+            <p th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Action</p>
         </div>
         <div class="table-item" th:each="category : ${berkay}">
             <p th:text="${category.id}"></p>
             <p th:text="${category.name}"></p>
             <div class="table-item__actions">
-                <a th:href="@{category/update/{id}(id=${category.id})}" title="Update">
+                <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{category/update/{id}(id=${category.id})}" title="Update">
                     Update
                 </a>
-                <a th:href="@{category/delete/{id}(id=${category.id})}" title="Delete">
+                <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{category/delete/{id}(id=${category.id})}" title="Delete">
                     Delete
                 </a>
-                <a th:href="@{/classification/classificatecategory/{id}(id=${category.id})}" title="Classification">
+                <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/classification/classificatecategory/{id}(id=${category.id})}" title="Classification">
                     Classification
                 </a>
             </div>
         </div>
     </div>
-    <a href="/category/add" class="action-btn">Add New Category</a>
+    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" href="/category/add" class="action-btn">Add New Category</a>
 </section>
 
 </body>
