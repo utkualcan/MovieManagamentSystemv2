@@ -189,6 +189,15 @@
         <a href="category">Category</a>
         <a href="movies">Movie</a>
         <a href="classification">Classification</a>
+        <a href="user">User</a>
+        <ul class="navbar-nav ml-auto" th:object="${principal}">
+            <li class="nav-item active" th:if="${#authorization.expression('isAnonymous()')}">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item active" th:unless="${#authorization.expression('isAnonymous()')}">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
     </nav>
 </header>
 <section>

@@ -225,8 +225,8 @@
 <section>
 
     <h2 class="section-title">Add New Movie</h2>
-    <form th:action="@{/movies/add}" th:object="${movie}" method="post">
-        Title: <label>
+    <form th:action="@{/movies/add}" th:object="${movie}" method="post" enctype="multipart/form-data">
+    Title: <label>
         <input style="padding: 0.5rem; margin-bottom: 1rem;" type="text" th:field="*{title}">
     </label><br>
         Director: <label>
@@ -235,6 +235,11 @@
         Year: <label>
         <input style="padding: 0.5rem;" type="number" th:field="*{year}">
     </label><br>
+    <div class="input-group mb-3">
+        <img src="/static/images/nophoto.png" class="rounded-3" style="width: 100px;" alt="Avatar" />
+            &nbsp;&nbsp;
+        <input type="file" name="image" accept="image/png, image/jpeg">
+    </div><br>
         <button type="submit">Save</button>
     </form>
     <a href="/movies">Back to Movie List</a>

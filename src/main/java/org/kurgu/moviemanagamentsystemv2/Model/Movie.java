@@ -26,9 +26,12 @@ public class Movie {
     @Column(name = "year")
     private int year;
 
+    @Column(name="imgURL")
+    private String imgURL;
+
     //------------------------------
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<Classification> classifications;
 
 

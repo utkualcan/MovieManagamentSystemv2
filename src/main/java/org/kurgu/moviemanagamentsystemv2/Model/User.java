@@ -23,9 +23,6 @@ public class User {
     @Column(length = 16)
     private String name;
 
-    @Column(name="is_locked", columnDefinition = "boolean default false")
-    private boolean isLocked;
-
     @Column(length = 8, nullable = false)
     private String role;
 }

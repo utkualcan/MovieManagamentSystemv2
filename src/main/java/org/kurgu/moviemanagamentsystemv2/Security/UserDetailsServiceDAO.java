@@ -22,7 +22,6 @@ public class UserDetailsServiceDAO implements UserDetailsService {
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .roles(user.getRole())
-                .accountLocked(user.isLocked())
                 .disabled(false)
                 .credentialsExpired(false)
                 .build();

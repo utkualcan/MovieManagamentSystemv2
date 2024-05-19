@@ -72,19 +72,22 @@ public class ClassificationController {
     @PostMapping("/classification/update/{id}")
     public String updateClassification(@PathVariable("id") int id, @ModelAttribute Classification classification) {
         if (hasAdminRole()) {
-            classification.setId(id);
-            Iterable<Classification> classifications = classificationRepository.findAll();
-            for (Classification c : classifications) {
-                if (c.getId() == classification.getId() && c.getId() == classification.getCategory().getId()) {
-                    return "redirect:/classification";
-                }
+            Optional<Classification> optionalClassification = classificationRepository.findById(id);
+            if (optionalClassification.isPresent()) {
+                Classification existingClassification = optionalClassification.get();
+                existingClassification.setCategory(classification.getCategory());
+                existingClassification.setMovie(classification.getMovie());
+                existingClassification.setDate(classification.getDate());
+                existingClassification.setDeleted(false);
+                classificationRepository.save(existingClassification);
+                return "redirect:/classification";
             }
-            classificationRepository.save(classification);
-            return "redirect:/classification";
+            return "redirect:/classification"; // Redirect if classification does not exist
         } else {
             return "redirect:/access-denied";
         }
     }
+
 
     @GetMapping("classification/classificatecategory/{id}")
     public String classificateCategory(@PathVariable("id") int id, Model model) {
@@ -110,19 +113,26 @@ public class ClassificationController {
     @PostMapping("classification/classificatecategory/{id}")
     public String classificateCategory(@PathVariable("id") int id, @ModelAttribute Classification classificate) {
         if (hasAdminRole()) {
-            classificate.setId(id);
-            Iterable<Classification> classifications = classificationRepository.findAll();
-            for (Classification c : classifications) {
-                if (c.getMovie().getId() == classificate.getMovie().getId() && c.getCategory().getId() == classificate.getCategory().getId()) {
+            Optional<Category> optionalCategory = categoryRepository.findById(id);
+            if (optionalCategory.isPresent()) {
+                classificate.setCategory(optionalCategory.get());
+                Classification existingClassification = classificationRepository.findByCategoryAndMovie(classificate.getCategory(), classificate.getMovie());
+                if (existingClassification != null) {
+                    if (existingClassification.isDeleted()) {
+                        existingClassification.setDeleted(false);
+                        classificationRepository.save(existingClassification);
+                    }
                     return "redirect:/classification";
                 }
+                classificationRepository.save(classificate);
             }
-            classificationRepository.save(classificate);
             return "redirect:/classification";
         } else {
             return "redirect:/access-denied";
         }
     }
+
+
 
     @GetMapping("classification/classificatemovie/{id}")
     public String classificateMovie(@PathVariable("id") int id, Model model) {
@@ -148,31 +158,42 @@ public class ClassificationController {
     @PostMapping("classification/classificatemovie/{id}")
     public String classificateMovie(@PathVariable("id") int id, @ModelAttribute Classification classificate) {
         if (hasAdminRole()) {
-            classificate.setId(id);
-            Iterable<Classification> classifications = classificationRepository.findAll();
-            for (Classification c : classifications) {
-                if (c.getMovie().getId() == classificate.getMovie().getId() && c.getCategory().getId() == classificate.getCategory().getId()) {
+            Optional<Movie> optionalMovie = movieRepository.findById(id);
+            if (optionalMovie.isPresent()) {
+                classificate.setMovie(optionalMovie.get());
+                Classification existingClassification = classificationRepository.findByCategoryAndMovie(classificate.getCategory(), classificate.getMovie());
+                if (existingClassification != null) {
+                    if (existingClassification.isDeleted()) {
+                        existingClassification.setDeleted(false);
+                        classificationRepository.save(existingClassification);
+                    }
                     return "redirect:/classification";
                 }
+                classificationRepository.save(classificate);
             }
-            classificationRepository.save(classificate);
             return "redirect:/classification";
         } else {
             return "redirect:/access-denied";
         }
     }
 
+
+
     @GetMapping("/classification/delete/{id}")
     public String deleteClassification(@PathVariable("id") int id) {
         if (hasAdminRole()) {
             Optional<Classification> optionalClassification = classificationRepository.findById(id);
-            optionalClassification.get().setDeleted(true);
-            classificationRepository.save(optionalClassification.get());
+            if (optionalClassification.isPresent()) {
+                Classification classification = optionalClassification.get();
+                classification.setDeleted(true);
+                classificationRepository.save(classification);
+            }
             return "redirect:/classification";
         } else {
             return "redirect:/access-denied";
         }
     }
+
 
     private boolean hasAdminRole() {
         return SecurityContextHolder.getContext().getAuthentication().getAuthorities()

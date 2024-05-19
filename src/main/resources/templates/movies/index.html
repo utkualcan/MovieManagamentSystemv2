@@ -186,6 +186,15 @@
         <a href="category">Category</a>
         <a href="movies">Movie</a>
         <a href="classification">Classification</a>
+        <a href="user">User</a>
+        <ul class="navbar-nav ml-auto" th:object="${principal}">
+            <li class="nav-item active" th:if="${#authorization.expression('isAnonymous()')}">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item active" th:unless="${#authorization.expression('isAnonymous()')}">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
     </nav>
 </header>
 <section>
@@ -200,6 +209,7 @@
         <p th:if="${#authorization.expression('hasRole(''ADMIN'')')}" >Action</p>
     </div>
     <div class="table-item" th:each="movie : ${movies}">
+        <p><img style="width: 1.5cm;" th:src="@{'/images/' + ${movie.imgURL}}"/></p>
         <p th:text="${movie.id}"></p>
         <p th:text="${movie.title}"></p>
         <p th:text="${movie.director}"></p>

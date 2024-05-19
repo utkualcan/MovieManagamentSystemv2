@@ -1,24 +1,104 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #333;
+            color: white;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #111;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #222;
+        }
+    </style>
     <meta charset="UTF-8">
-    <title>Users</title>
+    <title>User List</title>
 </head>
 <body>
+<header class="header">
+    <a href="/">
+        <h1 class="logo">MOVIETIFY</h1>
+    </a>
+    <nav>
+        <a href="category">Category</a>
+        <a href="movies">Movie</a>
+        <a href="classification">Classification</a>
+        <a href="user">User</a>
+        <ul class="navbar-nav ml-auto" th:object="${principal}">
+            <li class="nav-item active" th:if="${#authorization.expression('isAnonymous()')}">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item active" th:unless="${#authorization.expression('isAnonymous()')}">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </nav>
+</header>
 <h2>Users</h2>
 <table>
     <thead>
     <tr>
         <th>Name</th>
         <th>Username</th>
-        <th>IsLocked?</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="u:${users}">
         <td th:text="${u.name}"></td>
         <td th:text="${u.username}"></td>
-        <td th:text="${u.isLocked}"></td>
     </tr>
     </tbody>
 </table>

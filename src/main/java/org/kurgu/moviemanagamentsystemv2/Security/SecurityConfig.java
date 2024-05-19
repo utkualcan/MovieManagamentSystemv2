@@ -23,7 +23,7 @@ public class SecurityConfig {
         http.csrf(csrf->csrf.disable());
         http.authorizeHttpRequests(auth->auth
                         .requestMatchers("/login", "/logout").permitAll()
-                        .requestMatchers("/").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/").permitAll()
                         .requestMatchers("/user").hasRole("ADMIN")
                         .requestMatchers("/category/add").hasRole("ADMIN")
                         .requestMatchers("/category/update/").hasRole("ADMIN")
@@ -37,7 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("classification/delete/").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(login->login.loginPage("/login").defaultSuccessUrl("/",true))
-                .logout(logout->logout.logoutUrl("/logout").logoutSuccessUrl("/login")
+                .logout(logout->logout.logoutUrl("/logout").logoutSuccessUrl("/")
                         .clearAuthentication(true).deleteCookies("JSESSIONID").invalidateHttpSession(true))
                 .exceptionHandling(exception->exception.accessDeniedPage("/access-denied"));
 

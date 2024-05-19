@@ -23,6 +23,6 @@ public class Category {
 
     //----------------------------
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Classification> classifications;
 }
