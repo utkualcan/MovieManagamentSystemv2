@@ -53,6 +53,12 @@
             opacity: 100%;
         }
 
+        nav ul {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
 
         .btn-shine {
             position: absolute;
@@ -101,7 +107,7 @@
         <a href="movies">Movie</a>
         <a href="classification">Classification</a>
         <a href="user">User</a>
-        <ul class="navbar-nav ml-auto" th:object="${principal}">
+        <ul  th:object="${principal}">
             <li class="nav-item active" th:if="${#authorization.expression('isAnonymous()')}">
                 <a class="nav-link" href="/login">Login</a>
             </li>

@@ -226,7 +226,9 @@
             </a>
         </div>
     </div>
-    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" href="/movies/add" class="action-btn">Add New Movie</a>
+    <a style="margin-bottom: 1rem;" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" href="/movies/add" class="action-btn">Add New Movie</a>
+    <a  href="/" class="action-btn">Back</a>
+
 
 </section>
 
