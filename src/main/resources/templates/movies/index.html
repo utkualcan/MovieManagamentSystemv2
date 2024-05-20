@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <style>
-
         * {
             padding: 0;
             margin: 0;
@@ -10,13 +9,10 @@
             text-decoration: none;
         }
 
-
         body {
             background: black;
             min-height: 100vh;
             font-family: Inter, sans-serif;
-
-
         }
 
         .logo {
@@ -25,7 +21,6 @@
 
         .header {
             padding: 1rem 1.5rem;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -53,12 +48,11 @@
             opacity: 100%;
         }
 
-
         .btn-shine {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
             padding: 12px 48px;
             color: #ffffff;
             background: linear-gradient(to right, #4d4d4d 0, white 10%, #4d4d4d 20%);
@@ -88,7 +82,6 @@
 
         section {
             background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-
             padding: 3rem;
             border-radius: 0.5rem;
             color: white;
@@ -98,6 +91,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            overflow: auto;
         }
 
         .section-title {
@@ -116,7 +110,6 @@
         }
 
         .table-item {
-
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -124,7 +117,6 @@
             border-radius: .5rem;
             margin-bottom: 1rem;
         }
-
 
         .table-item:nth-child(even) {
             background-color: rgba(255, 255, 255, 0.2);
@@ -153,7 +145,6 @@
             background: rgba(255,255,255,0.5);
         }
 
-
         .action-btn {
             display: inline-block;
             padding: 1rem;
@@ -172,10 +163,26 @@
         .action-btn:focus {
             transform: scale(90%);
         }
+
+        .movie-poster {
+            width: 60px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+        }
+
+        .table-item p {
+            flex: 1;
+            margin: 0 0.5rem;
+        }
+
+        .table-item img {
+            flex: 0;
+        }
+
     </style>
     <meta charset="UTF-8">
     <title>Movie List</title>
-
 </head>
 <body>
 <header class="header">
@@ -198,18 +205,17 @@
     </nav>
 </header>
 <section>
-
     <h2 class="section-title">Movie List</h2>
-
     <div class="table-header">
+        <p>Poster</p>
         <p>ID</p>
         <p>Title</p>
         <p>Director</p>
         <p>Year</p>
-        <p th:if="${#authorization.expression('hasRole(''ADMIN'')')}" >Action</p>
+        <p th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Action</p>
     </div>
     <div class="table-item" th:each="movie : ${movies}">
-        <p><img style="width: 1.5cm;" th:src="@{'/images/' + ${movie.imgURL}}"/></p>
+        <img class="movie-poster" th:src="@{'/images/' + ${movie.imgURL}}"/>
         <p th:text="${movie.id}"></p>
         <p th:text="${movie.title}"></p>
         <p th:text="${movie.director}"></p>
@@ -227,11 +233,6 @@
         </div>
     </div>
     <a style="margin-bottom: 1rem;" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" href="/movies/add" class="action-btn">Add New Movie</a>
-    <a  href="/" class="action-btn">Back</a>
-
-
 </section>
-
-
 </body>
 </html>
